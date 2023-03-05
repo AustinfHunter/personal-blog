@@ -7,4 +7,4 @@ RUN go build -o ./bin/blog-backend
 
 EXPOSE 8080
 
-CMD ["./bin/blog-backend"]
+CMD ["./bin/blog-backend "]
