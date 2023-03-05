@@ -33,6 +33,8 @@ func main() {
 		UserStore: &userStore,
 	}
 
+	createSuperUser(&dbDisp)
+
 	mux := http.NewServeMux()
 
 	//fs := http.FileServer(http.Dir("./static/build"))
