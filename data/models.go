@@ -42,6 +42,7 @@ type UserService interface {
 	GetUserByEmail(string) (User, error)
 	UpdateUser(*User) error
 	DeleteUser(int) error
+	GetRecordCount() (int64, error)
 }
 
 type PostService interface {

@@ -124,3 +124,15 @@ func (u *MysqlUserStore) DeleteUser(id int) error {
 	}
 	return nil
 }
+
+func (u *MysqlUserStore) GetRecordCount() (int64, error) {
+	var c int64
+	qString := "SELECT COUNT(*) FROM User"
+
+	err := u.DB.QueryRow(qString).Scan(&c)
+	if err != nil {
+		return -1, err
+	}
+
+	return c, nil
+}

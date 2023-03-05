@@ -33,7 +33,7 @@ func main() {
 		UserStore: &userStore,
 	}
 
-	createSuperUser(&dbDisp)
+	createSuperUserCons(&dbDisp)
 
 	mux := http.NewServeMux()
 
