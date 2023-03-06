@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"flag"
 	"fmt"
 	"os"
@@ -48,7 +49,7 @@ func createSuperUserEnv(db *data.DBService) {
 	email := os.Getenv("SUEMAIL")
 	pass := os.Getenv("SUPASSWORD")
 	User, err := db.UserStore.GetUserByEmail(email)
-	if err != nil {
+	if err != nil && err.Error() != sql.ErrNoRows.Error() {
 		fmt.Printf("Could not create new super user:: err: %v\n", err)
 		return
 	}
