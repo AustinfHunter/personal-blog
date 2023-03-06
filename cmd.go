@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	"github.com/AustinfHunter/blog/server/data"
@@ -19,6 +20,7 @@ func createSuperUserFlags(db *data.DBService) {
 		return
 	}
 
+	fmt.Println("Attempting to create new super-user")
 	if os.Args[1] == "create-superuser" {
 		suCmd.Parse(os.Args[2:])
 		User, err := db.UserStore.GetUserByEmail(*suEmail)
@@ -34,5 +36,6 @@ func createSuperUserFlags(db *data.DBService) {
 		if err != nil {
 			panic(err)
 		}
+		fmt.Printf("Successfully create new Super User:\nFirst Name: %s\nLast Name: %s\nEmail: %s", *suFirstName, *suLastName, *suEmail)
 	}
 }
