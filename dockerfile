@@ -8,4 +8,4 @@ RUN go build -o ./bin/blog-backend
 
 EXPOSE $PORT
 
-CMD ["sh", "-c", "./bin/blog-backend  create-superuser -fname $SUFNAME -lname $SULNAME -email $SUEMAIL -password $SUPASSWORD"]
+CMD ["sh", "-c", "./bin/blog-backend  create-superuser -fname=$SUFNAME -lname=$SULNAME -email=$SUEMAIL -password=$SUPASSWORD"]
