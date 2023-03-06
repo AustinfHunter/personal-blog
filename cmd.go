@@ -15,8 +15,12 @@ func createSuperUserFlags(db *data.DBService) {
 	suEmail := suCmd.String("email", "", "email")
 	suPassword := suCmd.String("password", "", "password")
 
-	if os.Args[0] == "create-superuser" {
-		suCmd.Parse(os.Args[1:])
+	if len(os.Args) == 0 {
+		return
+	}
+
+	if os.Args[1] == "create-superuser" {
+		suCmd.Parse(os.Args[2:])
 		User, err := db.UserStore.GetUserByEmail(*suEmail)
 		if err != nil {
 			return

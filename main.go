@@ -19,7 +19,7 @@ func main() {
 	mysqlHost := os.Getenv("MYSQLHOST")
 	mysqlPort := os.Getenv("MYSQLPORT")
 	mysqlDB := os.Getenv("MYSQLDATABASE")
-	fmt.Printf("Connecting to DB at: %s:%s@tcp(%s:%s)/%s?parseTime=true", mysqlU, mysqlPass, mysqlHost, mysqlPort, mysqlDB)
+	fmt.Printf("Connecting to DB at: %s:%s@tcp(%s:%s)/%s?parseTime=true\n", mysqlU, mysqlPass, mysqlHost, mysqlPort, mysqlDB)
 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", mysqlU, mysqlPass, mysqlHost, mysqlPort, mysqlDB))
 	if err != nil {
 		panic(err)
