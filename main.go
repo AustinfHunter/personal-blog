@@ -19,6 +19,7 @@ func main() {
 	mysqlHost := os.Getenv("MYSQLHOST")
 	mysqlPort := os.Getenv("MYSQLPORT")
 	mysqlDB := os.Getenv("MYSQLDATABASE")
+	fmt.Printf("Connecting to DB at: %s:%s@tcp(%s:%s)/%s?parseTime=true", mysqlU, mysqlPass, mysqlHost, mysqlPort, mysqlDB)
 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", mysqlU, mysqlPass, mysqlHost, mysqlPort, mysqlDB))
 	if err != nil {
 		panic(err)
@@ -27,8 +28,6 @@ func main() {
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(10)
 	defer db.Close()
-
-	fmt.Printf("Successfully Connected to database\n")
 
 	postStore := data.MysqlPostStore{DB: db}
 	userStore := data.MysqlUserStore{DB: db}
@@ -41,8 +40,6 @@ func main() {
 	createSuperUserFlags(&dbDisp)
 
 	mux := http.NewServeMux()
-
-	//fs := http.FileServer(http.Dir("./static/build"))
 
 	mux.Handle("/", handlers.StaticHandler(http.FileServer(http.Dir("./static/build")), "./static/build/"))
 
