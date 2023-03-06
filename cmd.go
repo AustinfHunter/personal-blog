@@ -39,3 +39,26 @@ func createSuperUserFlags(db *data.DBService) {
 		fmt.Printf("Successfully create new Super User:\nFirst Name: %s\nLast Name: %s\nEmail: %s", *suFirstName, *suLastName, *suEmail)
 	}
 }
+
+// createSuperUserFlags creates a new admin user on the database using environment variables
+func createSuperUserEnv(db *data.DBService) {
+	fmt.Println("Attempting to create new super-user")
+	fname := os.Getenv("SUFNAME")
+	lname := os.Getenv("SULNAME")
+	email := os.Getenv("SUEMAIL")
+	pass := os.Getenv("SUPASSWORD")
+	User, err := db.UserStore.GetUserByEmail(email)
+	if err != nil {
+		return
+	}
+
+	if User.ID != 0 {
+		return
+	}
+
+	err = db.UserStore.CreateUser(&data.User{FirstName: fname, LastName: lname, Email: email, Password: pass, Admin: true})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Successfully create new Super User:\nFirst Name: %s\nLast Name: %s\nEmail: %s", fname, lname, email)
+}
