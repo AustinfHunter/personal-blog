@@ -49,10 +49,12 @@ func createSuperUserEnv(db *data.DBService) {
 	pass := os.Getenv("SUPASSWORD")
 	User, err := db.UserStore.GetUserByEmail(email)
 	if err != nil {
+		fmt.Printf("Could not create new super user:: err: %v\n", err)
 		return
 	}
 
 	if User.ID != 0 {
+		println("Could not create new super user, that user already exists.")
 		return
 	}
 
