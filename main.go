@@ -14,12 +14,7 @@ import (
 )
 
 func main() {
-	mysqlU := os.Getenv("MYSQLUSER")
-	mysqlPrt := os.Getenv("MYSQLPORT")
-	mysqlPswd := os.Getenv("MYSQLPASSWORD")
-	mysqlHst := os.Getenv("MYSQLHOST")
-	mysqlDB := os.Getenv("MYSQLDATABASE")
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", mysqlU, mysqlPswd, mysqlHst, mysqlPrt, mysqlDB))
+	db, err := sql.Open("mysql", os.Getenv("MYSQL_URL"))
 	if err != nil {
 		panic(err)
 	}
@@ -38,7 +33,7 @@ func main() {
 		UserStore: &userStore,
 	}
 
-	createSuperUserCons(&dbDisp)
+	createSuperUserFlags(&dbDisp)
 
 	mux := http.NewServeMux()
 
