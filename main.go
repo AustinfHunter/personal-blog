@@ -37,7 +37,7 @@ func main() {
 		UserStore: &userStore,
 	}
 
-	createSuperUserFlags(&dbDisp)
+	createSuperUserEnv(&dbDisp)
 
 	mux := http.NewServeMux()
 
