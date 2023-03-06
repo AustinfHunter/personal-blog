@@ -14,7 +14,12 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("mysql", os.Getenv("MYSQL_URL"))
+	mysqlU := os.Getenv("MYSQLUSER")
+	mysqlPrt := os.Getenv("MYSQLPORT")
+	mysqlPswd := os.Getenv("MYSQLPASSWORD")
+	mysqlHst := os.Getenv("MYSQLHOST")
+	mysqlDB := os.Getenv("MYSQLDATABASE")
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", mysqlU, mysqlPswd, mysqlHst, mysqlPrt, mysqlDB))
 	if err != nil {
 		panic(err)
 	}
