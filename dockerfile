@@ -12,4 +12,6 @@ RUN go build -o ./bin/blog-backend
 
 EXPOSE $PORT
 
-ENTRYPOINT ["./bin/blog-backend",  "create-superuser", "-fname=$SUFNAME", "-lname=$SULNAME", "-email=$SUEMAIL", "-password=$SUPASSWORD"]
+ENTRYPOINT ["./bin/blog-backend"]
+
+CMD ["create-superuser", "-fname=$SUFNAME", "-lname=$SULNAME", "-email=$SUEMAIL", "-password=$SUPASSWORD"]
