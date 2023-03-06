@@ -16,7 +16,7 @@ func createSuperUserFlags(db *data.DBService) {
 	suEmail := suCmd.String("email", "", "email")
 	suPassword := suCmd.String("password", "", "password")
 
-	if len(os.Args) == 0 {
+	if len(os.Args) < 2 {
 		return
 	}
 
