@@ -1,8 +1,12 @@
 package data
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
 	"database/sql"
+	"encoding/hex"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 )
@@ -67,4 +71,12 @@ func (p *Post) makeSlug() {
 		slug += s + "-"
 	}
 	p.Slug = fmt.Sprintf("%s%v-%v-%v", slug, time.Now().Year(), time.Now().Month(), time.Now().Day())
+}
+
+func (u *User) hashPassword() {
+	s := os.Getenv("SECRET_KEY")
+	fmt.Println(s)
+	p := u.Email + u.Password + s
+	h := hmac.New(sha256.New, []byte(p))
+	u.Password = hex.EncodeToString(h.Sum(nil))
 }

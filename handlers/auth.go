@@ -25,7 +25,6 @@ type claims struct {
 
 func getHashedPassword(u *data.User) string {
 	s := os.Getenv("SECRET_KEY")
-	fmt.Println(s)
 	p := u.Email + u.Password + s
 	h := hmac.New(sha256.New, []byte(p))
 	return hex.EncodeToString(h.Sum(nil))

@@ -18,6 +18,8 @@ func (u *MysqlUserStore) CreateUser(user *User) error {
 		return err
 	}
 
+	user.hashPassword()
+
 	_, err = stmt.Exec(user.FirstName, user.LastName, user.Email, user.ProfilePicture, user.Admin, user.Password)
 	if err != nil {
 		return err
