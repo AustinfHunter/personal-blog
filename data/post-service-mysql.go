@@ -92,7 +92,7 @@ func (p *MysqlPostStore) CreatePost(ps *Post) error {
 		return err
 	}
 	defer stmt.Close()
-	rows, err := stmt.Query(ps.AuthorID, ps.Title, "", ps.Content, ps.Archived, time.Now().Format(time.RFC3339), ps.Slug)
+	rows, err := stmt.Query(ps.AuthorID, ps.Title, "", ps.Content, ps.Archived, time.Now().Format("2006-01-02 15:04:05"), ps.Slug)
 	if err != nil {
 		return err
 	}
