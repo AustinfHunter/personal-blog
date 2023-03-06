@@ -26,9 +26,9 @@ func main() {
 	db.SetConnMaxLifetime(time.Minute * 3)
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(10)
+	defer db.Close()
 
 	fmt.Printf("Successfully Connectect to database\n")
-	defer db.Close()
 
 	postStore := data.MysqlPostStore{DB: db}
 	userStore := data.MysqlUserStore{DB: db}
