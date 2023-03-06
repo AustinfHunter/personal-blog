@@ -154,14 +154,10 @@ func SignUpHandler(db *data.DBService) http.Handler {
 func AuthTestHandler(db *data.DBService) http.Handler {
 	fn := func(w http.ResponseWriter, req *http.Request) {
 		CorsMiddleWare(&w, req)
-		if req.Method == "OPTIONS" {
-			return
-		}
 		if authorizationMiddleware(req) {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
-
 		w.WriteHeader(http.StatusForbidden)
 	}
 	return http.HandlerFunc(fn)
