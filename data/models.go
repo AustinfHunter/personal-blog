@@ -53,7 +53,7 @@ type PostService interface {
 	GetPosts(int, int, bool) ([]Post, error)
 	GetPostById(int) (Post, error)
 	GetPostBySlug(string) (Post, error)
-	CreatePost(*Post) error
+	CreatePost(*Post) (int64, error)
 	UpdatePost(*Post) (int64, error)
 	DeletePost(int) error
 	GetRecordCount(bool) (int64, error)

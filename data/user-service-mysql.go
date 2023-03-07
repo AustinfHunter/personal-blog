@@ -51,7 +51,6 @@ func (u *MysqlUserStore) GetUserByID(id int) (User, error) {
 	qString := "SELECT * FROM User WHERE ID=?"
 	stmt, err := u.DB.Prepare(qString)
 	if err != nil {
-		fmt.Printf("err.Error(): %v\n", err.Error())
 		return User{}, err
 	}
 

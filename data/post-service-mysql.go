@@ -83,21 +83,20 @@ func (p *MysqlPostStore) GetPostBySlug(slug string) (Post, error) {
 	return ps, nil
 }
 
-// Create post adds a new post to the database and returns that new post if successful.
-func (p *MysqlPostStore) CreatePost(ps *Post) error {
+// Create post adds a new post to the database and returns the id and slug if successful.
+func (p *MysqlPostStore) CreatePost(ps *Post) (int64, error) {
 	ps.makeSlug()
 	qString := "INSERT INTO Post (Author_ID, Title, Image_URL, Content, Archived, Upload_Date, Slug) VALUES (?,?,?,?,?,?,?);"
 	stmt, err := p.DB.Prepare(qString)
 	if err != nil {
-		return err
+		return -1, err
 	}
 	defer stmt.Close()
-	rows, err := stmt.Query(ps.AuthorID, ps.Title, "", ps.Content, ps.Archived, time.Now().Format("2006-01-02 15:04:05"), ps.Slug)
+	res, err := stmt.Exec(ps.AuthorID, ps.Title, "", ps.Content, ps.Archived, time.Now().Format("2006-01-02 15:04:05"), ps.Slug)
 	if err != nil {
-		return err
+		return -1, err
 	}
-	rows.Close()
-	return nil
+	return res.LastInsertId()
 }
 
 // UpdatePost updates a Post

@@ -64,6 +64,7 @@ func PopulatePosts(db *data.DBService) http.Handler {
 		if err != nil {
 			fmt.Printf("err: %v\n", err)
 		}
+		w.WriteHeader(http.StatusOK)
 	}
 	return http.HandlerFunc(fn)
 }
@@ -96,6 +97,7 @@ func GetAllPosts(db *data.DBService) http.Handler {
 		if err != nil {
 			fmt.Printf("err: %v\n", err)
 		}
+		w.WriteHeader(http.StatusOK)
 	}
 	return http.HandlerFunc(fn)
 }
@@ -128,6 +130,7 @@ func GetPost(db *data.DBService) http.Handler {
 			if err != nil {
 				fmt.Printf("err: %v\n", err)
 			}
+			w.WriteHeader(http.StatusOK)
 			return
 		}
 
@@ -136,6 +139,7 @@ func GetPost(db *data.DBService) http.Handler {
 		p, err := db.PostStore.GetPostBySlug(slug)
 		if err != nil {
 			fmt.Printf("err: %v\n", err)
+			return
 		}
 
 		a, err := db.UserStore.GetUserByID(p.AuthorID)
@@ -147,6 +151,7 @@ func GetPost(db *data.DBService) http.Handler {
 		if err != nil {
 			fmt.Printf("err: %v\n", err)
 		}
+		w.WriteHeader(http.StatusOK)
 	}
 	return http.HandlerFunc(fn)
 }
@@ -158,6 +163,9 @@ func AddPost(db *data.DBService) http.Handler {
 			w.WriteHeader(http.StatusForbidden)
 			return
 		}
+
+		j := json.NewEncoder(w)
+
 		reqBody, err := ioutil.ReadAll(req.Body)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -178,12 +186,19 @@ func AddPost(db *data.DBService) http.Handler {
 			return
 		}
 
-		err = db.PostStore.CreatePost(&post)
+		id, err := db.PostStore.CreatePost(&post)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Printf("err: %v\n", err)
 			return
 		}
+
+		res := struct {
+			ID int64 `json:"id"`
+		}{id}
+		j.Encode(res)
+
+		w.WriteHeader(http.StatusOK)
 	}
 	return http.HandlerFunc(fn)
 }
@@ -221,6 +236,7 @@ func UpdatePost(db *data.DBService) http.Handler {
 			fmt.Printf("err: %v\n", err)
 			return
 		}
+		w.WriteHeader(http.StatusOK)
 	}
 	return http.HandlerFunc(fn)
 }
