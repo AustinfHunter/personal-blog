@@ -130,7 +130,6 @@ func GetPost(db *data.DBService) http.Handler {
 			if err != nil {
 				fmt.Printf("err: %v\n", err)
 			}
-			w.WriteHeader(http.StatusOK)
 			return
 		}
 
@@ -151,7 +150,6 @@ func GetPost(db *data.DBService) http.Handler {
 		if err != nil {
 			fmt.Printf("err: %v\n", err)
 		}
-		w.WriteHeader(http.StatusOK)
 	}
 	return http.HandlerFunc(fn)
 }
