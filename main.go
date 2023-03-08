@@ -27,6 +27,10 @@ func main() {
 	db.SetConnMaxLifetime(time.Minute * 3)
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(10)
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
 	defer db.Close()
 
 	postStore := data.MysqlPostStore{DB: db}
@@ -41,7 +45,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.Handle("/", handlers.StaticHandler(http.FileServer(http.Dir("./static/build")), "./static/build/"))
+	mux.Handle("/", handlers.StaticHandler(http.FileServer(http.Dir("./build")), "./build/"))
 
 	mux.Handle("/api/posts", handlers.PopulatePosts(&dbDisp))
 

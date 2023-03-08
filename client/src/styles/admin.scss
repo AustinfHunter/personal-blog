@@ -1,0 +1,67 @@
+@use './_colors.scss';
+
+.editor {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+    padding-bottom: 5%;
+  
+    form {
+      width: 100%;
+      min-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  
+      label {
+        color: colors.$text-color;
+        margin-top: 15px;
+        font-size: 30px;
+        font-weight: bold;
+      }
+  
+      .title {
+        width: 50%;
+        border: none;
+        height: 25px;
+        border-radius: 10px;
+      }
+  
+      .content {
+        width: 50%;
+        min-height: 30vh;
+        border-radius: 10px;
+      }
+    }
+  
+    .markdown {
+      background-color: colors.$bg-color;
+      color: colors.$text-color;
+      margin: 20px;
+      padding: 10px;
+    }
+  }
+
+  .postManager {
+    min-height: 100vh;
+    display: flex;
+    color: colors.$text-color;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .postprev {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 30%;
+      padding: 15px;
+      margin: 5px;;
+      background-color: colors.$bg-color;
+      border-radius: 5px;
+    }
+  }
+  

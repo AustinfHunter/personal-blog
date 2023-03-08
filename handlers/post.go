@@ -119,16 +119,23 @@ func GetPost(db *data.DBService) http.Handler {
 			p, err := db.PostStore.GetPostById(id)
 			if err != nil {
 				fmt.Printf("err: %v\n", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
 			}
 
 			a, err := db.UserStore.GetUserByID(p.AuthorID)
 			if err != nil {
 				fmt.Printf("err: %v\n", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+
 			}
 
 			err = j.Encode(postResponse{p, publicUser{a.ID, a.FirstName, a.LastName}})
 			if err != nil {
 				fmt.Printf("err: %v\n", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
 			}
 			return
 		}
