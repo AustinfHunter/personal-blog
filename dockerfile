@@ -1,3 +1,4 @@
+ARG PORT
 ARG BUILD_MODE=build
 FROM node:alpine AS client_build
 WORKDIR /client/
