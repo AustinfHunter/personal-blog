@@ -13,16 +13,16 @@ func StaticHandler(fs http.Handler, dir string) http.Handler {
 		if req.URL.Path == "/" {
 			fs.ServeHTTP(w, req)
 		}
-
-		fPath := dir + strings.TrimPrefix(path.Clean(req.URL.Path), "/")
-		_, err := os.Stat(fPath)
-		if err != nil {
-			if !os.IsNotExist(err) {
-				fmt.Printf("err: %v\n", err)
-				w.WriteHeader(http.StatusInternalServerError)
-				return
+		if req.URL.Path != "/" {
+			fPath := dir + strings.TrimPrefix(path.Clean(req.URL.Path), "/")
+			_, err := os.Stat(fPath)
+			if err != nil {
+				if !os.IsNotExist(err) {
+					fmt.Printf("err: %v\n", err)
+					return
+				}
+				req.URL.Path = "/"
 			}
-			req.URL.Path = "/index.html"
 		}
 		fs.ServeHTTP(w, req)
 	}
