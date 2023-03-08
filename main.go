@@ -45,7 +45,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.Handle("/", handlers.StaticHandler(http.FileServer(http.Dir("build")), "build"))
+	mux.Handle("/", handlers.StaticHandler(http.FileServer(http.Dir("./build/")), "./build/"))
 
 	mux.Handle("/api/posts", handlers.PopulatePosts(&dbDisp))
 
