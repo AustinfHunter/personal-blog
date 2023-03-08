@@ -1,5 +1,7 @@
 FROM node:alpine AS client_build
 ARG PORT
+ARG RAILWAY_STATIC_URL
+ENV REACT_APP_API_URL = ${RAILWAY_STATIC_URL}
 WORKDIR /client/
 COPY ./client ./
 RUN yarn install && yarn build
