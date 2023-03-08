@@ -22,7 +22,7 @@ func StaticHandler(fs http.Handler, dir string) http.Handler {
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
-			req.URL.Path = "/"
+			req.URL.Path = "/index.html"
 		}
 		fs.ServeHTTP(w, req)
 	}
