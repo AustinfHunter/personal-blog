@@ -15,7 +15,7 @@ RUN go build -o ./bin/blog-backend
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
-COPY --from=client_build /client/build ./build
+COPY --from=client_build /client/build ./build/
 COPY --from=server_build /go/src/app/bin/blog-backend .
 EXPOSE $PORT
 ENTRYPOINT ["./blog-backend"]
