@@ -1,5 +1,5 @@
-ARG PORT
 FROM node:alpine AS client_build
+ARG PORT
 WORKDIR /client/
 COPY ./client ./
 RUN yarn install && yarn build
