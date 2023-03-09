@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"database/sql"
@@ -9,7 +9,7 @@ import (
 )
 
 // createSuperUserFlags creates a new admin user on the database using environment variables
-func createSuperUserEnv(db *data.DBService) {
+func CreateSuperUserEnv(db *data.DBService) {
 	fmt.Println("Attempting to create new super-user")
 	fname := os.Getenv("SUFNAME")
 	lname := os.Getenv("SULNAME")

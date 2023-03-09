@@ -1,7 +1,7 @@
 FROM node:alpine AS client_build
 ARG PORT
 ARG RAILWAY_STATIC_URL
-ENV REACT_APP_API_URL=/api/
+ENV REACT_APP_API_URL=${RAILWAY_STATIC_URL}/api/
 WORKDIR /client/
 COPY ./client ./
 RUN yarn install && yarn build
@@ -10,7 +10,7 @@ FROM golang:alpine AS server_build
 ARG PORT
 RUN apk --no-cache add gcc g++ make git
 WORKDIR /go/src/app
-COPY . .
+COPY ./cmd .
 RUN go mod tidy
 RUN go build -o ./bin/blog-backend
 

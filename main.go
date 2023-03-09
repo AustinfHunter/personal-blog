@@ -8,12 +8,14 @@ import (
 	"os"
 	"time"
 
+	"github.com/AustinfHunter/blog/server/cmd"
 	"github.com/AustinfHunter/blog/server/data"
 	"github.com/AustinfHunter/blog/server/handlers"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
+	//Database connection setup
 	mysqlU := os.Getenv("MYSQLUSER")
 	mysqlPass := os.Getenv("MYSQLPASSWORD")
 	mysqlHost := os.Getenv("MYSQLHOST")
@@ -33,6 +35,7 @@ func main() {
 	}
 	defer db.Close()
 
+	//Data access services initialization
 	postStore := data.MysqlPostStore{DB: db}
 	userStore := data.MysqlUserStore{DB: db}
 
@@ -41,8 +44,10 @@ func main() {
 		UserStore: &userStore,
 	}
 
-	createSuperUserEnv(&dbDisp)
+	//Create a new super user using environment variables
+	cmd.CreateSuperUserEnv(&dbDisp)
 
+	//Server setup
 	mux := http.NewServeMux()
 
 	mux.Handle("/", handlers.StaticHandler(http.FileServer(http.Dir("build/")), "./build/"))
@@ -71,6 +76,7 @@ func main() {
 		port = ":8080"
 	}
 
+	//Start server
 	t, err := net.Listen("tcp", port)
 	if err != nil {
 		panic(err)
