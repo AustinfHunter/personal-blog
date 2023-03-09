@@ -10,7 +10,7 @@ FROM golang:alpine AS server_build
 ARG PORT
 RUN apk --no-cache add gcc g++ make git
 WORKDIR /go/src/app
-COPY ./cmd .
+COPY . .
 RUN go mod tidy
 RUN go build -o ./bin/blog-backend
 
