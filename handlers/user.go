@@ -27,23 +27,26 @@ func SignInHandler(db *data.DBService) http.Handler {
 		var res authResponse
 		j := json.NewEncoder(w)
 
+		//read request body
 		reqBody, err := ioutil.ReadAll(req.Body)
 		if err != nil {
 			fmt.Printf("err: %v\n", err)
 		}
 
+		//Unmarshal request body to a new User
 		var u data.User
 		err = json.Unmarshal(reqBody, &u)
 		if err != nil {
 			fmt.Printf("err: %v\n", err)
 		}
 
-		fmt.Printf("u: %v\n", u)
-
+		//get the user associated the email sent in the request
 		uDB, err := db.UserStore.GetUserByEmail(u.Email)
 		if err != nil {
 			fmt.Printf("err: %v\n", err)
 		}
+
+		//Check for matching passwords. comparePasswords hashes the plaintext password that is passed as the first parameter.
 		m := comparePasswords(&u, uDB.Password)
 
 		//If the passwords match, create the proper response body. Note: The user from the database should be used for the creation of new JWT tokens to
@@ -72,7 +75,7 @@ func SignInHandler(db *data.DBService) http.Handler {
 			return
 		}
 
-		//If the passwords do match, create the proper response.
+		//If the passwords do not match, create the proper response.
 		res = authResponse{
 			"ERR::BAD CREDENTIALS",
 			"",
