@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import rehypeRaw from 'rehype-raw'
 
 function Post() {
     const url = process.env.REACT_APP_API_URL + "posts/" + useParams().post
@@ -13,30 +14,18 @@ function Post() {
     const [post, setPost] = useState({})
 
     useEffect(() => {
-        window.addEventListener("hashchange", handleHash)
         fetch(url).then(res => res.json())
             .then(data => {
                 setPost(data.post)
                 document.title = data.post.title
             })
-        return () => { window.removeEventListener("hashchange", handleHash) }
     }, [])
-
-    const handleHash = () => {
-        const hash = window.location.hash
-        if (hash.length) {
-            const element = document.getElementById(hash.substring(1))
-            if (element) {
-                element.scrollIntoView()
-            }
-        }
-    }
 
     return (
         <div className="post">
             <div className="content">
                 <h1>{post.title}</h1>
-                <ReactMarkdown children={post.content} remarkPlugins={[remarkGfm]} className="markdown" components={{
+                <ReactMarkdown children={post.content} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} className="markdown" components={{
                     code({ node, inline, className, children, ...props }) {
                         const match = /language-(\w+)/.exec(className || '')
                         return !inline && match ? (
