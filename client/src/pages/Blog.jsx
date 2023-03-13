@@ -3,6 +3,7 @@ import '../styles/blog.scss'
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom";
 import Pagination from "../components/Pagination";
+import Loading from '../components/Loading';
 
 function BlogCard(props) {
     const p = props.post
@@ -13,13 +14,13 @@ function BlogCard(props) {
             <h2>{p.title}</h2>
             <h4>{p.author}</h4>
             </NavLink>
-            <h3>{date.getUTCMonth()+1}/{date.getUTCDate()+1}/{date.getUTCFullYear()}</h3>
+            <h3>{date.getUTCMonth()+1}/{date.getUTCDate()}/{date.getUTCFullYear()}</h3>
         </div>
     )
 }
 
 function Blog() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [page, setPage] = useState(0)
     const [numPosts, setNumPosts] = useState(0)
     const url = process.env.REACT_APP_API_URL + "posts";
@@ -34,6 +35,11 @@ function Blog() {
         document.title = "Austin Hunter - Blog";
     }, [page])
 
+    if(!posts){
+        return (
+            <Loading />
+        )
+    }
     return(
         <div>
             <div className="blog">

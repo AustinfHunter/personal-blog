@@ -11,9 +11,9 @@ function Home(props) {
             <div className="bio">
                 <h1>Hi there!</h1>
                 <p>
-                    My name is Austin Hunter and this is my developer blog. This is were I write about technical topics that I find interesting, including software
-                    engineering, and web development. I'll also be documenting personal projects here as I work on them with the goal of allowing others to learn or follow
-                    along with me as I explore new projects, frameworks, programming languages, and technical problems. 
+                    My name is Austin Hunter and this is my developer blog. This is where I'll be writing about technical topics that I find interesting, including software
+                    engineering, and web development. I'll also be documenting personal projects with the goal of giving others the opportunity to learn or follow
+                    along with me as I explore new programming languages, frameworks, and technical problems. 
                 </p>
 
                 <p>
@@ -21,8 +21,7 @@ function Home(props) {
                 </p>
 
                 <p>
-                    This is version 1.0 of this blog, so it is likely that things will change a lot in the near future. Some planned changes include support for comments on posts,
-                    support for a wider range of media in posts, and an RSS Feed for the blog. 
+                    This blog is still a work in progress, so things will likely change a lot in the near future. 
                 </p>
             </div>
         </div>

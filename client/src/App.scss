@@ -157,3 +157,41 @@
   align-items: center;
   color: colors.$text-color;
 }
+
+.loading {
+  display: flex;
+  flex-direction: rows;
+  justify-content: center;
+  height: 100vh;
+  .ball {
+    margin: 5% 10px 10px 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: colors.$bg-color;
+    animation: loading-an 1.5s linear infinite;
+  }
+
+  .ball:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+
+  .ball:nth-child(3) {
+    animation-delay: 1s;
+  }
+
+  @keyframes loading-an {
+    0% {
+      transform: scale(1);
+    }
+
+    80% {
+      transform: scale(1.5);
+      background-color: colors.$highlight;
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+}

@@ -39,8 +39,19 @@
     color: colors.$text-color;
     font-size: large;
     background-color: colors.$bg-color-lighter;
-    h1 {
+    .title {
       text-align: center;
+      margin: none;
+    }
+
+    .info { 
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      color: colors.$highlight;
+      font-size: 25px;
     }
   
     .content {
