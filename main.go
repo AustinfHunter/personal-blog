@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"net"
@@ -11,6 +12,8 @@ import (
 	"github.com/AustinfHunter/blog/server/cmd"
 	"github.com/AustinfHunter/blog/server/data"
 	"github.com/AustinfHunter/blog/server/handlers"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -47,6 +50,16 @@ func main() {
 	//Create a new super user using environment variables
 	cmd.CreateSuperUserEnv(&dbDisp)
 
+	//Create an s3 client
+	cfg, err := config.LoadDefaultConfig(context.TODO())
+	if err != nil {
+		panic(err)
+	}
+
+	s3Client := s3.NewFromConfig(cfg)
+
+	bucket := os.Getenv("AWS_BUCKET")
+
 	//Server setup
 	mux := http.NewServeMux()
 
@@ -67,6 +80,8 @@ func main() {
 	mux.Handle("/api/admin/posts", handlers.GetAllPosts(&dbDisp))
 
 	mux.Handle("/api/posts/update", handlers.UpdatePost(&dbDisp))
+
+	mux.Handle("/api/upload/image", handlers.UploadImage(s3Client, bucket))
 
 	var port string
 
